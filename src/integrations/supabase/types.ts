@@ -14,7 +14,142 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      applications: {
+        Row: {
+          cover_letter: string
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          job_id: string
+          resume_path: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          cover_letter?: string
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          job_id: string
+          resume_path?: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          cover_letter?: string
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          job_id?: string
+          resume_path?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "applications_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jobs: {
+        Row: {
+          category: string
+          company: string
+          created_at: string
+          description: string
+          id: string
+          location: string
+          owner_id: string | null
+          requirements: string
+          salary: string
+          title: string
+          type: string
+        }
+        Insert: {
+          category?: string
+          company: string
+          created_at?: string
+          description: string
+          id?: string
+          location: string
+          owner_id?: string | null
+          requirements?: string
+          salary?: string
+          title: string
+          type?: string
+        }
+        Update: {
+          category?: string
+          company?: string
+          created_at?: string
+          description?: string
+          id?: string
+          location?: string
+          owner_id?: string | null
+          requirements?: string
+          salary?: string
+          title?: string
+          type?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          bio: string
+          full_name: string
+          headline: string
+          id: string
+          location: string
+          skills: string
+        }
+        Insert: {
+          bio?: string
+          full_name?: string
+          headline?: string
+          id: string
+          location?: string
+          skills?: string
+        }
+        Update: {
+          bio?: string
+          full_name?: string
+          headline?: string
+          id?: string
+          location?: string
+          skills?: string
+        }
+        Relationships: []
+      }
+      saved_jobs: {
+        Row: {
+          job_id: string
+          user_id: string
+        }
+        Insert: {
+          job_id: string
+          user_id: string
+        }
+        Update: {
+          job_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_jobs_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
