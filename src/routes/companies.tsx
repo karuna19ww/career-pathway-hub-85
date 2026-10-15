@@ -1,0 +1,8 @@
+import {createFileRoute,Link} from '@tanstack/react-router';
+import {useSuspenseQuery} from '@tanstack/react-query';
+import {useState} from 'react';
+import {jobsQuery,pageHead} from '@/lib/career';
+import {CompanyMark} from '@/components/career/jobs';
+import {ArrowUpRight,Search,MapPin} from 'lucide-react';
+export const Route=createFileRoute('/companies')({head:()=>pageHead('Explore companies','Meet inspiring teams and discover their open opportunities.'),loader:({context})=>context.queryClient.ensureQueryData(jobsQuery),component:Companies});
+function Companies(){const {data:jobs}=useSuspenseQuery(jobsQuery);const [q,setQ]=useState('');const names=[...new Set(jobs.map(j=>j.company))].filter(c=>c.toLowerCase().includes(q.toLowerCase()));return <section className="container page-section"><div className="page-heading"><span className="eyebrow">FIND YOUR PEOPLE</span><h1>Great work starts with a great team.</h1><p>Explore companies building something worth being part of.</p></div><label className="simple-search"><Search size={19}/><input placeholder="Search companies" aria-label="Search companies" value={q} onChange={e=>setQ(e.target.value)}/></label><div className="company-grid">{names.map(c=>{const roles=jobs.filter(j=>j.company===c);return <Link key={c} to="/companies/$company" params={{company:c}} className="company-card"><div className="company-card-cover"><CompanyMark company={c}/><ArrowUpRight size={21}/></div><h2>{c}</h2><p>{roles[0]?.description.split('.')[0]}.</p><div className="company-card-foot"><span><MapPin size={14}/>{roles[0]?.location}</span><strong>{roles.length} open role{roles.length!==1?'s':''}</strong></div></Link>;})}</div>{!names.length&&<p className="empty-state">No companies match your search.</p>}</section>;}
