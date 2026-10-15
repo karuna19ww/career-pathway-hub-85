@@ -10,33 +10,179 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CompaniesRouteImport } from './routes/companies'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as GuidanceRouteImport } from './routes/guidance'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as RecruiterRouteImport } from './routes/recruiter'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as SavedRouteImport } from './routes/saved'
+import { Route as CompaniesCompanyRouteImport } from './routes/companies.$company'
+import { Route as JobsIndexRouteImport } from './routes/jobs.index'
+import { Route as JobsJobIdRouteImport } from './routes/jobs.$jobId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompaniesRoute = CompaniesRouteImport.update({
+  id: '/companies',
+  path: '/companies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidanceRoute = GuidanceRouteImport.update({
+  id: '/guidance',
+  path: '/guidance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecruiterRoute = RecruiterRouteImport.update({
+  id: '/recruiter',
+  path: '/recruiter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SavedRoute = SavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompaniesCompanyRoute = CompaniesCompanyRouteImport.update({
+  id: '/$company',
+  path: '/$company',
+  getParentRoute: () => CompaniesRoute,
+} as any)
+const JobsIndexRoute = JobsIndexRouteImport.update({
+  id: '/jobs/',
+  path: '/jobs/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JobsJobIdRoute = JobsJobIdRouteImport.update({
+  id: '/jobs/$jobId',
+  path: '/jobs/$jobId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/companies': typeof CompaniesRouteWithChildren
+  '/dashboard': typeof DashboardRoute
+  '/guidance': typeof GuidanceRoute
+  '/profile': typeof ProfileRoute
+  '/recruiter': typeof RecruiterRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/saved': typeof SavedRoute
+  '/companies/$company': typeof CompaniesCompanyRoute
+  '/jobs/$jobId': typeof JobsJobIdRoute
+  '/jobs/': typeof JobsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/companies': typeof CompaniesRouteWithChildren
+  '/dashboard': typeof DashboardRoute
+  '/guidance': typeof GuidanceRoute
+  '/profile': typeof ProfileRoute
+  '/recruiter': typeof RecruiterRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/saved': typeof SavedRoute
+  '/companies/$company': typeof CompaniesCompanyRoute
+  '/jobs/$jobId': typeof JobsJobIdRoute
+  '/jobs': typeof JobsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/companies': typeof CompaniesRouteWithChildren
+  '/dashboard': typeof DashboardRoute
+  '/guidance': typeof GuidanceRoute
+  '/profile': typeof ProfileRoute
+  '/recruiter': typeof RecruiterRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/saved': typeof SavedRoute
+  '/companies/$company': typeof CompaniesCompanyRoute
+  '/jobs/$jobId': typeof JobsJobIdRoute
+  '/jobs/': typeof JobsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/companies'
+    | '/dashboard'
+    | '/guidance'
+    | '/profile'
+    | '/recruiter'
+    | '/reset-password'
+    | '/saved'
+    | '/companies/$company'
+    | '/jobs/$jobId'
+    | '/jobs/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/companies'
+    | '/dashboard'
+    | '/guidance'
+    | '/profile'
+    | '/recruiter'
+    | '/reset-password'
+    | '/saved'
+    | '/companies/$company'
+    | '/jobs/$jobId'
+    | '/jobs'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/companies'
+    | '/dashboard'
+    | '/guidance'
+    | '/profile'
+    | '/recruiter'
+    | '/reset-password'
+    | '/saved'
+    | '/companies/$company'
+    | '/jobs/$jobId'
+    | '/jobs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
+  CompaniesRoute: typeof CompaniesRouteWithChildren
+  DashboardRoute: typeof DashboardRoute
+  GuidanceRoute: typeof GuidanceRoute
+  ProfileRoute: typeof ProfileRoute
+  RecruiterRoute: typeof RecruiterRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  SavedRoute: typeof SavedRoute
+  JobsJobIdRoute: typeof JobsJobIdRoute
+  JobsIndexRoute: typeof JobsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +194,110 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/companies': {
+      id: '/companies'
+      path: '/companies'
+      fullPath: '/companies'
+      preLoaderRoute: typeof CompaniesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guidance': {
+      id: '/guidance'
+      path: '/guidance'
+      fullPath: '/guidance'
+      preLoaderRoute: typeof GuidanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recruiter': {
+      id: '/recruiter'
+      path: '/recruiter'
+      fullPath: '/recruiter'
+      preLoaderRoute: typeof RecruiterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/saved': {
+      id: '/saved'
+      path: '/saved'
+      fullPath: '/saved'
+      preLoaderRoute: typeof SavedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/companies/$company': {
+      id: '/companies/$company'
+      path: '/$company'
+      fullPath: '/companies/$company'
+      preLoaderRoute: typeof CompaniesCompanyRouteImport
+      parentRoute: typeof CompaniesRoute
+    }
+    '/jobs/': {
+      id: '/jobs/'
+      path: '/jobs'
+      fullPath: '/jobs/'
+      preLoaderRoute: typeof JobsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jobs/$jobId': {
+      id: '/jobs/$jobId'
+      path: '/jobs/$jobId'
+      fullPath: '/jobs/$jobId'
+      preLoaderRoute: typeof JobsJobIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface CompaniesRouteChildren {
+  CompaniesCompanyRoute: typeof CompaniesCompanyRoute
+}
+
+const CompaniesRouteChildren: CompaniesRouteChildren = {
+  CompaniesCompanyRoute: CompaniesCompanyRoute,
+}
+
+const CompaniesRouteWithChildren = CompaniesRoute._addFileChildren(
+  CompaniesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
+  CompaniesRoute: CompaniesRouteWithChildren,
+  DashboardRoute: DashboardRoute,
+  GuidanceRoute: GuidanceRoute,
+  ProfileRoute: ProfileRoute,
+  RecruiterRoute: RecruiterRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  SavedRoute: SavedRoute,
+  JobsJobIdRoute: JobsJobIdRoute,
+  JobsIndexRoute: JobsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
