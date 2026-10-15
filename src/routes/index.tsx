@@ -1,24 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
-
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
-export const Route = createFileRoute("/")({
-  component: Index,
-});
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
+import {createFileRoute,Link,useNavigate} from '@tanstack/react-router';
+import {useSuspenseQuery} from '@tanstack/react-query';
+import {ArrowUpRight,ArrowRight,Sparkles,Check,GraduationCap,BriefcaseBusiness,Globe,TrendingUp} from 'lucide-react';
+import {Button} from '@/components/ui/button';
+import {jobsQuery,pageHead} from '@/lib/career';
+import {JobBoard,SearchBar} from '@/components/career/jobs';
+import team from '@/assets/career-team.jpg';
+export const Route=createFileRoute('/')({head:()=>pageHead('Your next chapter starts here','Discover jobs, internships and career resources on Nextstep. Find your next opportunity and grow your career.'),loader:({context})=>context.queryClient.ensureQueryData(jobsQuery),component:Home});
+function Home(){const navigate=useNavigate();const {data:jobs}=useSuspenseQuery(jobsQuery);return <><section className="home-hero"><div className="container hero-content"><div className="hero-kicker"><span className="live-dot"/> BIG AMBITIONS. REAL OPPORTUNITIES.</div><h1>Your next chapter<br/>starts <span>here.</span><span className="headline-star">✳</span></h1><p>From your first internship to your next big move.<br className="desktop-break"/> Find the work you love, and the future you imagine.</p><SearchBar onSearch={(q,l)=>navigate({to:'/jobs',search:{q,location:l}})}/><div className="trending-search"><span>Popular searches:</span>{['Product Designer','Frontend Developer','Internships'].map(t=><Button key={t} variant="ghost" onClick={()=>navigate({to:'/jobs',search:{q:t==='Internships'?'':t,location:'',type:t==='Internships'?'Internship':''}})}>{t}<ArrowUpRight size={12}/></Button>)}</div><div className="hero-bottom"><div className="people-stack"><span>AK</span><span>JL</span><span>SM</span><span>RC</span></div><p><strong>A little ambition goes a long way.</strong><br/>Your next step is waiting.</p><div className="hero-proof"><Check size={17}/>Real companies. Meaningful careers.</div></div></div><div className="hero-art" aria-hidden="true"><div className="art-square art-one"/><div className="art-square art-two"/><div className="art-arrow"><ArrowUpRight strokeWidth={1.3}/></div><span className="art-star">✳</span><div className="art-label"><TrendingUp size={20}/> Your potential, unlocked.</div></div></section><section className="company-strip"><div className="container"><p>GREAT CAREERS START WITH GREAT COMPANIES</p><div className="company-wordmarks"><span>◒ Linear</span><span className="notion-wordmark">▣ Notion</span><span>≋ Spotify</span><span>▦ Microsoft</span><span>✣ Figma</span><span>stripe</span></div></div></section><section className="container discovery-row"><Link to="/jobs" search={{q:'',location:'',type:'Internship'}}><span className="discovery-icon"><GraduationCap/></span><div><h3>Start something great</h3><p>Internships & early career roles</p></div><ArrowUpRight/></Link><Link to="/jobs"><span className="discovery-icon green"><BriefcaseBusiness/></span><div><h3>Make your next move</h3><p>{jobs.filter(j=>j.type==='Full-time').length} full-time opportunities</p></div><ArrowUpRight/></Link><Link to="/jobs" search={{q:'',location:'Remote'}}><span className="discovery-icon peach"><Globe/></span><div><h3>Work from anywhere</h3><p>Remote roles. Boundless possibilities.</p></div><ArrowUpRight/></Link></section><JobBoard home/><section className="career-band container"><div className="career-photo"><img src={team} alt="Young professionals collaborating in a bright workspace" width={1536} height={1024} loading="lazy"/></div><div className="career-band-copy"><span className="eyebrow"><Sparkles size={15}/> MORE THAN A JOB BOARD</span><h2>A little guidance.<br/>A bigger future.</h2><p>Build your confidence, sharpen your skills, and take your next step with clarity.</p><Button asChild><Link to="/guidance">Explore career resources <ArrowRight/></Link></Button></div></section></>;}
